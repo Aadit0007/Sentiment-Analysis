@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Sentiment Analysis</title>
+   </head>
+   <body>
+        <h1>Sentiment Analysis</h1>
+        <textarea id="text-input" rows="4" cols="50" placeholder="Type your text here..."></textarea>
+        <br>
+        <button id="analyze-btn">Analyze</button>
+        <h2 id="result"></h2>
+
+    <script>
+     document.getElementById('analyze-btn').addEventListener('click', async () => {
+         const text = document.getElementById('text-input').value;
+         const response = await fetch('/sentiment', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ text })
+         });
+         const data = await response.json();
+         document.getElementById('result').innerText = data.sentiment
+             ? `Sentiment: ${data.sentiment}`
+             : data.error;
+     });
+    </script>
+    </body>
+</html>
